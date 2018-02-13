@@ -2,7 +2,7 @@
 
 
 
-void discard() {
+void discard(FILE * fp) {
     int ch;
     
     while( (ch = getc(fp) != EOF) && currState != ERRSTATE && currState == WHITESPACE) {
@@ -37,5 +37,5 @@ void returnTok() {
 void errFunc() {
     printf("Error found\n");
     currState = ERRSTATE;
-    return 
+    return;
 }

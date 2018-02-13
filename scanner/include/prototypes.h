@@ -8,8 +8,8 @@ extern  void    printToken(int);
  * Located in transFunc.c                       *
  * *********************************************/
 extern void errFunc();
-extern void discard();
-extern void accumulate();
+extern void discard(FILE *);
+extern void accumulate(FILE *);
 extern void returnTok();
 
 #endif
