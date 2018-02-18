@@ -15,4 +15,4 @@ ${OBJ}/%.o: ${SRC}/%.c
 	${CC} $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o
+	rm -f $(OBJ)/*.o
