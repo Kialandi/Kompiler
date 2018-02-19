@@ -1,11 +1,15 @@
 #ifndef MAPTAB_H
 #define MAPTAB_H
 
-#define NUMBERS 48
-#define CHARS   65
-#define WHITESPACE 10
+#define TOTALMAPS 36
+#define JUNK    0
+#define WHITESPACE 1
+#define NUMBERS 2
+#define CHARS   3
+
 
 //TODO: handle different symbols
-#define SYMBOLS
+#define SYMBOLS 12
 
+extern int mapTable[ASCIIMAX + 1];
 #endif

@@ -5,7 +5,7 @@
 
 int main (int arg, char ** argv) {
     int j;
-    printf("#include \"kompiler.h\"\n\nint mapTable[ASCIIMAX] =\n");
+    printf("#include \"kompiler.h\"\n\nint mapTable[ASCIIMAX + 1] =\n");
 
 
     printf("{ /* Mapping Table */\n");
