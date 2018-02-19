@@ -1,7 +1,6 @@
 #ifndef MAPTAB_H
 #define MAPTAB_H
 
-#define TOTALMAPS 36
 #define JUNK    0
 #define WHITESPACE 1
 #define NUMBERS 2

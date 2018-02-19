@@ -6,21 +6,24 @@
 #define MAXTOKBUFLEN    100
 #define MAXTOKENS       25
 
-#define MAXSTATES       10
+#define MAXSTATES       25
 #define ASCIIMAX        127 //DEL
-#define MAXCHARS        ASCIIMAX - ASCIIMIN + 1
+#define TOTALMAPS       36
 
+//TODO: Make more states
 /* States */
+#define ERRST           -1
 #define DISCARDST       0
 #define NUMBERST        1
 #define IDST            2
-#define ERRST           -1
+#define STRINGST        3
 #define ACCEPTST        30
 
 /* Tokens */
 #define ERRTOKEN        0
 #define NUMBERTOK       1
 #define ALPHATOK        2
+#define OPTOKEN         3
 
 /* Typedefs */
 typedef int token;
@@ -32,7 +35,7 @@ struct state {
     token tok;
 };
 
-extern struct state stMachine[MAXSTATES][ASCIIMAX + 1];
+extern struct state stMachine[MAXSTATES][TOTALMAPS];
 extern int currState;
 extern int tokBufIndex;
 extern int currCh;

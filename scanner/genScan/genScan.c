@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAXSTATES   10
+#define MAXSTATES   25
 #define ASCIIMAX    127 //DEL
 
 int main (int arg, char ** argv) {

@@ -15,6 +15,7 @@ int main(int argc, char ** argv) {
     token tok;
     tok = getToken();
     printf("Token: %d, Value: %s\n", tok, tokBuf);
+    //TODO: fix this to get more than just one
     /*
     while ( (tok = getToken(fp)) != EOF) {
         printf("Token: %d, Value: %s\n", tok, tokBuf);

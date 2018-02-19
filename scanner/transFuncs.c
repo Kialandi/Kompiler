@@ -59,14 +59,17 @@ void accumulate() {
 }
 
 token returnTok(int state) {
+    //TODO: consider using a table for this too
     if (currState == ERRST) {
         return ERRTOKEN;
     }
     else if (currState == NUMBERST) {
+        //consider returning double/floats
         //return number token
         return NUMBERTOK;
     }
     else if (currState == IDST) {
+        //consider returning string? maybe have to consider between single and double quotes
         //return ID token
         return ALPHATOK;
     }
