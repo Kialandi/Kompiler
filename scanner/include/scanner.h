@@ -11,12 +11,11 @@
 #define MAXCHARS        ASCIIMAX - ASCIIMIN + 1
 
 /* States */
+#define DISCARDST       0
+#define NUMBERST        1
+#define IDST            2
 #define ERRST           -1
 #define ACCEPTST        30
-#define DISCARDST       0
-#define ACCUST          1
-#define NUMBERST        2
-#define ALPHAST         3
 
 /* Tokens */
 #define ERRTOKEN        0

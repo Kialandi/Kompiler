@@ -66,7 +66,7 @@ token returnTok(int state) {
         //return number token
         return NUMBERTOK;
     }
-    else if (currState == ALPHAST) {
+    else if (currState == IDST) {
         //return ID token
         return ALPHATOK;
     }

@@ -9,6 +9,7 @@
 /* import header files */
 #include "scanner.h"
 #include "prototypes.h"
+#include "mapTable.h"
 
 /* defining flags */
 #define DEBUG   1
