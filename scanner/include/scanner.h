@@ -38,5 +38,6 @@ extern int currState;
 extern int tokBufIndex;
 extern int currCh;
 extern char tokBuf[MAXTOKBUFLEN + 1];//+1 to enable last \0
+extern FILE * fp;
 
 #endif

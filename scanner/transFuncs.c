@@ -1,8 +1,8 @@
 #include "kompiler.h"
 
-void discard(FILE * fp) {
-    
-    while (currCh = getc(fp) != EOF) {
+void discard() {
+    printf("in discard\n");
+    while ( (currCh = getc(fp)) != EOF) {
         //keep looping while we find whitespaces
         currState = getNextSt(currState, currCh);
         if (currState == ERRST) {
@@ -22,41 +22,52 @@ void discard(FILE * fp) {
     return;
 }
 
-void accumulate(FILE * fp) {
+void accumulate() {
     //store the current character
     tokBuf[tokBufIndex++] = currCh;
 
-    while( (currCh = getc(fp) != EOF) && currState != ERRST && tokBufIndex < MAXTOKBUFLEN) {
+    while ( (currCh = getc(fp)) != EOF && currState != ERRST && tokBufIndex < MAXTOKBUFLEN) {
+        //printf("accumulate loop, currCh: %d\n", currCh);
         //keep looping until we find an accepting state
         tokBuf[tokBufIndex++] = currCh;
         currState = getNextSt(currState, currCh);
         if (currState == ACCEPTST) {
             //done accumulating
             tokBuf[tokBufIndex] = '\0';
-            printf("accumulate done: %s\n", tokBuf);
+            //printf("accumulate done: %s\n", tokBuf);
             return;
         }
+    }
+
+    if (currCh == EOF) {
+        //done accumulating
+        tokBuf[tokBufIndex] = '\0';
+        printf("Found EOF: %s\n", tokBuf);
+        return;
     }
 
     if (tokBufIndex >= MAXTOKBUFLEN) {//string too long
         printf("accumulate: string was too long\n");
     }
-    else {
+    else if (currState == ERRST) {
         printf("accumulate: error state found!\n");
+    }
+    else {
+        printf("accumulate: invalid state found: %d\n", currState);
     }
     return;
 }
 
 token returnTok(int state) {
-    if(currState == ERRST) {
+    if (currState == ERRST) {
         return ERRTOKEN;
     }
     else if (currState == NUMBERST) {
-        //return number token and set value
+        //return number token
         return NUMBERTOK;
     }
     else if (currState == ALPHAST) {
-        //return OP token and set value to the operation
+        //return ID token
         return ALPHATOK;
     }
     printf("returnTok: something went wrong, unknown state found...\n");
@@ -65,6 +76,7 @@ token returnTok(int state) {
 
 
 void errFunc() {
+    //TODO: should probably dump some info here
     printf("errFunc: Error found\n");
     return;
 }
