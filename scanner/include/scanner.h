@@ -105,6 +105,8 @@
 #define XORTOK          34
 #define XOREQ           35
 
+#define STARSTAR        36
+
 #define TILDETOK        100
 #define LPARANTOK       101
 #define RPARANTOK       102

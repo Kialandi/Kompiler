@@ -566,7 +566,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* " */ {TOKST, &returnTok, STARTOK},
 	/* PLUS */ {ERRST, &errFunc, 0},
 	/* MINUS */ {ERRST, &errFunc, 0},
-	/* STAR */ {ERRST, &errFunc, 0},
+	/* STAR */ {TOKST, &returnTok, STARSTAR},
 	/* SLASH */ {ERRST, &errFunc, 0},
 	/* MOD */ {ERRST, &errFunc, 0},
 	/* ! */ {ERRST, &errFunc, 0},
