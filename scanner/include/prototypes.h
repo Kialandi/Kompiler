@@ -6,14 +6,25 @@ extern int scinit();
  * Transition functions to move between states  *
  * Located in transFunc.c                       *
  * *********************************************/
+
+extern void grabNextCh();
+extern void storeAndGrab();
+extern void storeSlashGrab();
+extern void storeSlashAccu();
+extern void storeGrabCall();
+extern void backToDefault();
 extern void discard();
 extern void accumulate();
-extern token returnTok(int);
+extern void returnTok();
 extern void errFunc();
+extern void charSTFunc();
+extern void strSTFunc();
+extern void slashFunc();
 
-//helper functions to get transtion states and functions
+//getters for stMachine fields
 extern int getNextSt(int, int);
 extern transFunc getTransFunc(int, int);
+extern int grabRetToken(int, int);
 
 //function called by parser
 extern token getToken();
