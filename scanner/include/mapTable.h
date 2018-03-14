@@ -45,4 +45,6 @@
 #define POUND       33
 
 extern int mapTable[ASCIIMAX + 1];
+extern int hexTable[ASCIIMAX + 1];
+
 #endif

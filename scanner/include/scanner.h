@@ -4,7 +4,7 @@
 #define OK              1
 #define MAXTOKBUFLEN    100
 
-#define MAXSTATES       25
+#define MAXSTATES       26
 #define ASCIIMAX        127 //DEL
 #define TOTALMAPS       34
 
@@ -44,12 +44,15 @@
 #define GTST            21
 #define EQST            22
 #define CARETST         23
+#define HEXST           24
+#define HEXVALIDST      25
 
 #define TOKST           99
 
 /* Accepting states */
 #define ACCEPTST        100
 #define INTACCST        100
+#define HEXACCST        100
 #define FLOACCST        100
 #define IDACCST         100
 #define CHARACCST       100
@@ -106,6 +109,8 @@
 #define XOREQ           35
 
 #define STARSTAR        36
+#define ARROW           37
+#define HEXTOK          38      //add this in eventually
 
 #define TILDETOK        100
 #define LPARANTOK       101

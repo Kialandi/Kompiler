@@ -9,17 +9,17 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* NEWLINE */ {DISCARDST, &discard, 0},
 	/* ' */ {CHARST, &charSTFunc, 0},
 	/* " */ {STRINGST, &strSTFunc, 0},
-	/* PLUS */ {PLUSST, &storeGrabCall, 0},//+ ++ +=
-	/* MINUS */ {MINUSST, &storeGrabCall, 0},//- -- -=
-	/* STAR */ {STARST, &storeGrabCall, 0},//* *=
+	/* PLUS */ {PLUSST, &tokFunc, 0},//+ ++ +=
+	/* MINUS */ {MINUSST, &tokFunc, 0},//- -- -= ->
+	/* STAR */ {STARST, &tokFunc, 0},//* *=
 	/* SLASH */ {SLASHST, &slashFunc, 0}, // / /=
-	/* MOD */ {MODST, &storeGrabCall, 0},//% %=
-	/* ! */ {NOTST, &storeGrabCall, 0},//! !=
-	/* & */ {ANDST, &storeGrabCall, 0},//& && &=
-	/* | */ {ORST, &storeGrabCall, 0},//| || |=
-	/* < */ {LTST, &storeGrabCall, 0},//< << <=
-	/* > */ {GTST, &storeGrabCall, 0},//> >> >=
-	/* = */ {EQST, &storeGrabCall, 0},//= == 
+	/* MOD */ {MODST, &tokFunc, 0},//% %=
+	/* ! */ {NOTST, &tokFunc, 0},//! !=
+	/* & */ {ANDST, &tokFunc, 0},//& && &=
+	/* | */ {ORST, &tokFunc, 0},//| || |=
+	/* < */ {LTST, &tokFunc, 0},//< << <=
+	/* > */ {GTST, &tokFunc, 0},//> >> >=
+	/* = */ {EQST, &tokFunc, 0},//= == 
 	/* ~ */ {TOKST, &returnTok, TILDETOK},
 	/* ( */ {TOKST, &returnTok, LPARANTOK},
 	/* ) */ {TOKST, &returnTok, RPARANTOK},
@@ -32,7 +32,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* ? */ {TOKST, &returnTok, QUESTIONTOK},
 	/* : */ {ERRST, &errFunc, COLONTOK},
 	/* ; */ {TOKST, &returnTok, SEMICOLTOK},
-	/* ^ */ {CARETST, &storeGrabCall, 0},//^ ^=
+	/* ^ */ {CARETST, &tokFunc, 0},//^ ^=
 	/* _ */ {IDST, &accumulate, 0},
 	/* \ */ {ERRST, &errFunc, 0},
 	/* # */ {TOKST, &returnTok, POUNDTOK}
@@ -139,7 +139,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* { */ {IDACCST, &returnTok, IDTOKEN},
 	/* } */ {IDACCST, &returnTok, IDTOKEN},
 	/* , */ {IDACCST, &returnTok, IDTOKEN},
-	/* . */ {ERRST, &errFunc, 0}, //for structs in the future
+	/* . */ {IDST, &accumulate, 0}, //for structs in the future
 	/* ? */ {IDACCST, &returnTok, IDTOKEN},
 	/* : */ {ERRST, &errFunc, 0},
 	/* ; */ {IDACCST, &returnTok, IDTOKEN},
@@ -227,7 +227,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* JUNK */ {ERRST, &errFunc, 0},
 	/* WHITESPACE */ {ERRST, &errFunc, 0},
 	/* NUMBERS */ {ERRST, &errFunc, 0},
-	/* CHARS */ {CHARST2, &storeSlashGrab, 0},
+	/* CHARS */ {CHARST2, &escChar, 0},
 	/* NEWLINE */ {ERRST, &errFunc, 0},
 	/* ' */ {CHARST2, &storeAndGrab, 0},
 	/* " */ {ERRST, &errFunc, 0},
@@ -301,7 +301,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* JUNK */ {ERRST, &errFunc, 0},
 	/* WHITESPACE */ {ERRST, &errFunc, 0},
 	/* NUMBERS */ {ERRST, &errFunc, 0},
-	/* CHARS */ {STRINGST, &storeSlashGrab, 0},
+	/* CHARS */ {STRINGST, &escChar, 0}, //change this 
 	/* NEWLINE */ {ERRST, &errFunc, 0},
 	/* ' */ {ERRST, &errFunc, 0},
 	/* " */ {STRINGST, &accumulate, 0},
@@ -536,7 +536,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* & */ {ERRST, &errFunc, 0},
 	/* | */ {ERRST, &errFunc, 0},
 	/* < */ {ERRST, &errFunc, 0},
-	/* > */ {ERRST, &errFunc, 0},
+	/* > */ {TOKST, &storeAndGrab, ARROW},
 	/* = */ {TOKST, &returnTok, MINUSEQ},
 	/* ~ */ {ERRST, &errFunc, 0},
 	/* ( */ {TOKST, &returnTok, MINUSTOK},
@@ -889,11 +889,48 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* # */ {ERRST, &errFunc, 0}
 }
 
-,{ /* State row 24 - UNUSED FOR NOW */
+,{ /* State row 24 - HEXST */
+	/* JUNK */ {ERRST, &errFunc, 0},
+	/* WHITESPACE */ {HEXACCST, &returnTok, HEXTOK},
+	/* NUMBERS */ {HEXST, &errFunc, 0},
+	/* CHARS */ {HEXST, &errFunc, 0},
+	/* NEWLINE */ {HEXACCST, &returnTok, HEXTOK},
+	/* ' */ {ERRST, &errFunc, 0},
+	/* " */ {ERRST, &errFunc, 0},
+	/* PLUS */ {HEXACCST, &returnTok, HEXTOK},
+	/* MINUS */ {HEXACCST, &returnTok, HEXTOK},
+	/* STAR */ {HEXACCST, &returnTok, HEXTOK},
+	/* SLASH */ {HEXACCST, &returnTok, HEXTOK},
+	/* MOD */ {HEXACCST, &returnTok, HEXTOK},
+	/* ! */ {HEXACCST, &returnTok, HEXTOK},
+	/* & */ {HEXACCST, &returnTok, HEXTOK},
+	/* | */ {HEXACCST, &returnTok, HEXTOK},
+	/* < */ {HEXACCST, &returnTok, HEXTOK},
+	/* > */ {HEXACCST, &returnTok, HEXTOK},
+	/* = */ {HEXACCST, &returnTok, HEXTOK},
+	/* ~ */ {ERRST, &errFunc, 0},
+	/* ( */ {ERRST, &errFunc, 0},
+	/* ) */ {HEXACCST, &returnTok, HEXTOK},
+	/* [ */ {ERRST, &errFunc, 0},
+	/* ] */ {HEXACCST, &returnTok, HEXTOK},
+	/* { */ {ERRST, &errFunc, 0},
+	/* } */ {HEXACCST, &returnTok, HEXTOK},
+	/* , */ {HEXACCST, &returnTok, HEXTOK},
+	/* . */ {FLOATST, &accumulate, 0},
+	/* ? */ {HEXACCST, &returnTok, HEXTOK},
+	/* : */ {ERRST, &errFunc, 0},
+	/* ; */ {HEXACCST, &returnTok, HEXTOK},
+	/* ^ */ {HEXACCST, &returnTok, HEXTOK},
+	/* _ */ {ERRST, &errFunc, 0},
+	/* \ */ {ERRST, &errFunc, 0},
+	/* # */ {ERRST, &errFunc, 0}
+}
+
+,{ /* State row 25 - HEXVALIDST */
 	/* JUNK */ {ERRST, &errFunc, 0},
 	/* WHITESPACE */ {ERRST, &errFunc, 0},
 	/* NUMBERS */ {ERRST, &errFunc, 0},
-	/* CHARS */ {ERRST, &errFunc, 0},
+	/* CHARS */ {HEXST, &accumulate, 0},
 	/* NEWLINE */ {ERRST, &errFunc, 0},
 	/* ' */ {ERRST, &errFunc, 0},
 	/* " */ {ERRST, &errFunc, 0},

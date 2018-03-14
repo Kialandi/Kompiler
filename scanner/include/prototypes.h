@@ -9,9 +9,9 @@ extern int scinit();
 
 extern void grabNextCh();
 extern void storeAndGrab();
-extern void storeSlashGrab();
+extern void escChar();
 extern void storeSlashAccu();
-extern void storeGrabCall();
+extern void tokFunc();
 extern void backToDefault();
 extern void discard();
 extern void accumulate();

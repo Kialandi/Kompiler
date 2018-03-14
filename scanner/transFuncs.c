@@ -54,11 +54,79 @@ void discard() {
     return;
 }
 
+int validHex(int ch) {
+    //check if valid hex using hex table
+    return hexTable[ch];
+}
+
+void accuHex() {
+    int nextState = HEXST;
+    while ( (currCh = getc(fp)) != EOF && currState != ACCEPTST && currState != ERRST && tokBufIndex < MAXTOKBUFLEN) {
+        //keep looping until we find an accepting state
+        nextState = getNextSt(currState, currCh);
+        //printf("accumulate loop, currCh: %c nextSt: %d\n", currCh, nextState);
+        if (nextState == ACCEPTST) {
+            //done accumulating
+            tokBuf[tokBufIndex] = '\0';
+            retToken = grabRetToken(currState, currCh);
+            return;
+        }
+        
+        if (validHex(currCh)) {
+            currState = nextState;
+            storeCh(currCh);
+        }
+        else {
+            printf("accuHex: invalid hex found\n");
+            tokBuf[tokBufIndex] = '\0';
+            retToken = ERRTOKEN;
+            return;
+        }
+    }
+    //getting out of loop means not accepting state or EOF
+    if (currCh == EOF) {
+        //done accumulating, still valid
+        tokBuf[tokBufIndex] = '\0';
+        retToken = grabRetToken(currState, ' ');
+        //printf("accumulate: Found EOF, current buf: %s\n", tokBuf);
+    }
+    else if (tokBufIndex >= MAXTOKBUFLEN) {//string too long
+        printf("accuHex: string was too long\n");
+        retToken = ERRTOKEN;
+    }
+    else if (currState == ERRST) {
+        printf("accuHex: error state found!\n");
+        retToken = ERRTOKEN;
+    }
+    else {
+        printf("accuHex: invalid state found: %d\n", currState);
+        retToken = ERRTOKEN;
+    }
+
+}
+
 void accumulate() {
     int nextState;
     int enteredSt = currState;
 
-    //store the current character
+    if (currState == NUMBERST && currCh == '0') {
+        grabNextCh();
+        if (currCh == 'x') {
+            //special case for hex
+            storeCh('0');
+            storeCh(currCh);
+            currState = HEXST;
+            accuHex();
+            return;
+        }
+        else while (currState == NUMBERST && currCh == '0' && currCh != EOF) {
+            //gets rid of leading zeroes except for one
+            currCh = getc(fp);
+        }
+
+        storeCh('0');
+    }
+    
     storeCh(currCh);
 
     while ( (currCh = getc(fp)) != EOF && currState != ACCEPTST && currState != ERRST && tokBufIndex < MAXTOKBUFLEN) {
@@ -73,9 +141,8 @@ void accumulate() {
             //printf("accumulate done: %s\n", tokBuf);
             return;
         }
-        //TODO: make this only do it for stringST
         if (nextState != enteredSt) {
-
+            //TODO: this isn't very robust
             //printf("accumulate next != entered, currCh: %c currSt: %d\n", currCh, currState);
             transFunc f = getTransFunc(currState, currCh);
             currState = nextState;
@@ -105,7 +172,6 @@ void accumulate() {
         //done accumulating, still valid
         tokBuf[tokBufIndex] = '\0';
         retToken = grabRetToken(currState, ' ');
-        
         //printf("accumulate: Found EOF, current buf: %s\n", tokBuf);
     }
     else if (tokBufIndex >= MAXTOKBUFLEN) {//string too long
@@ -205,6 +271,15 @@ void strSTFunc() {
     }
     //throw away the first quote
     grabNextCh();
+
+    if (currCh == '\"') {
+        //if empty string found
+        grabNextCh();
+        storeCh('\0');
+        retToken = STRTOKEN;
+        return;
+    }
+
     transFunc f = getTransFunc(currState, currCh);
     currState = getNextSt(currState, currCh);
     f();
@@ -274,7 +349,8 @@ void storeAndGrab() {
     currState = getNextSt(currState, currCh);
 }
 
-void storeSlashGrab() {
+void escChar() {
+    //TODO: fix for escaped chars instead of accepting all chars
     storeCh('\\');
     storeAndGrab();
 }
@@ -284,7 +360,7 @@ void storeSlashAccu() {
     accumulate();
 }
 
-void storeGrabCall() {
+void tokFunc() {
     //printf("storegrab: currch: %c, currSt: %d\n", currCh, currState);
     int originalCh = currCh;
     storeCh(currCh);
@@ -294,8 +370,9 @@ void storeGrabCall() {
     //printf("rettok: %d\n", retToken);
 
     //** will give you trouble here if you support pointers
+    //TODO: handle %% !! ^^ (think it already is)
     //TODO: handle **
-    if (currCh == '=' || currCh == originalCh) {
+    if (currCh == '=' || currCh == originalCh || (originalCh == '-' && currCh == '>')) {
         storeCh(currCh);
         grabNextCh(); //get next char for next iteration
     }
@@ -306,6 +383,7 @@ void storeGrabCall() {
 void errFunc() {
     //TODO: should probably dump some info here
     printf("errFunc: Error found\n");
+    retToken = ERRTOKEN;
     exit(-1);
 }
 
