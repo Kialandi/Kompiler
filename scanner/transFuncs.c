@@ -355,11 +355,6 @@ void escChar() {
     storeAndGrab();
 }
 
-void storeSlashAccu() {
-    storeCh('\\');
-    accumulate();
-}
-
 void tokFunc() {
     //printf("storegrab: currch: %c, currSt: %d\n", currCh, currState);
     int originalCh = currCh;

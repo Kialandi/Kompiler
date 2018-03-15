@@ -926,7 +926,7 @@ struct state stMachine[MAXSTATES][TOTALMAPS] = {
 	/* # */ {ERRST, &errFunc, 0}
 }
 
-,{ /* State row 25 - HEXVALIDST */
+,{ /* State row 25 - UNUSED */
 	/* JUNK */ {ERRST, &errFunc, 0},
 	/* WHITESPACE */ {ERRST, &errFunc, 0},
 	/* NUMBERS */ {ERRST, &errFunc, 0},
