@@ -11,6 +11,7 @@ int main (int argc, char ** argv) {
     deleteNode(list, n);
     printf("printing no nodes left\n");
     printList(list);
+    deleteList(list);
     // int i;
     // DLList * list = createList();
     // DLNode * del;
