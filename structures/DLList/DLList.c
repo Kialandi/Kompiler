@@ -153,5 +153,9 @@ void printList(DLList * list) {
 }
 
 int listEmpty(DLList * list) {
+    if (list == NULL) {
+        perror("Invalid list.\n");
+        return -1;
+    }
     return list->count == 0 ? 1 : 0;
 }

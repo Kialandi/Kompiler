@@ -1,9 +1,10 @@
 
 SRC := .
 OBJ := .
+DLSRC := ../DLList
 
 CC = gcc
-CFLAGS = -g -Wall -I../DLList/
+CFLAGS = -g -Wall
 
 SOURCES := $(wildcard $(SRC)/*.c)
 OBJECTS := $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SOURCES))

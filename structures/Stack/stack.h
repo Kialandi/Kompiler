@@ -1,6 +1,6 @@
 #include "../DLList/DLList.h"
 
-extern DLList * list;
+extern DLList * stack;
 
 extern void stackInit();
 extern void stackDestr();

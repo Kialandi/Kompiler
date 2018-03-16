@@ -1,33 +1,66 @@
 #include "stack.h"
 
-DLList * list;
+DLList * stack;
+int validStack();
 
 void stackInit() {
-    list = createList();
+    stack = createList();
 }
 
 void stackDestr() {
-    deleteList(list);
+    deleteList(stack);
 }
 
 void push(int data){
-    insertHead(list, createNode(data));
+    insertHead(stack, createNode(data));
 }
 
 int pop(){
-    int data = list->head->next->data;
-    deleteNode(list, list->head->next);
+    if (!validStack()) {
+        return 0;
+    }
+    int data = stack->head->next->data;
+    deleteNode(stack, stack->head->next);
     return data;
 }
 
 int peek(){
-    return list->head->next->data;
+    if (!validStack()) {
+        return 0;
+    }
+    return stack->head->next->data;
 }
 
 int isEmpty(){
-    return listEmpty(list);
+    return listEmpty(stack);
 }
 
 void printStack() {
-    printList(list);
+    printf("Printing stack...\n");
+    if (!validStack()) {
+        return;
+    }
+    DLNode * iter = stack->head->next;
+    
+    while (iter != stack->tail) {
+        printf("%d\n", iter->data);
+        iter = iter->next;
+    }
+
+    printf("%d\n", iter->data);
+    printf("Done.\n");
+}
+
+int validStack() {
+    
+    if (stack == NULL) {
+        perror("validStack: Null stack found\n");
+        return 0;
+    }
+    if (isEmpty()) {
+        printf("validStack: Empty stack found\n");
+        return 0;
+    }
+
+    return 1;
 }

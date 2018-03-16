@@ -3,7 +3,7 @@ SRC := .
 OBJ := .
 
 CC = gcc
-CFLAGS = -g -Wall -Iinclude/
+CFLAGS = -g -Wall
 
 SOURCES := $(wildcard $(SRC)/*.c)
 OBJECTS := $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SOURCES))
