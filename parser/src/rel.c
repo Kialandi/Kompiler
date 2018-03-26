@@ -7,6 +7,7 @@ var * rel() { //handle + and -
 
     var1 = fact();
     while (currTok == PLUSTOK || currTok == MINUSTOK) {
+        printf("in rel loop\n");
         if (var1->type != NUMBERTOK && var1->type != FLOATTOK) {
             //error check for numbers
             printf("rel: add and minus needs numbers");

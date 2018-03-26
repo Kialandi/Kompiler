@@ -7,6 +7,7 @@ var * fact() { //handle * and /
 
     var1 = term();//get the first variable
     while (currTok == STARTOK || currTok == DIVTOK) {
+        printf("in fact loop\n");
         if (var1->type != NUMBERTOK && var1->type != FLOATTOK) {
             //error check for numbers
             printf("fact: mult and div needs numbers");

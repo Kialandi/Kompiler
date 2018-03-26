@@ -7,7 +7,7 @@ var * expr() {
 
     var1 = doBool();
     while (currTok == ANDAND || currTok == OROR) {
-        if (var1 != NUMBERTOK) {
+        if (var1->type != NUMBERTOK) {
             //error check for bools
             printf("expr: Non-boolean found\n");
             return NULL;
@@ -18,7 +18,7 @@ var * expr() {
         getTok();
         var2 = doBool();//get second variable
 
-        if (var2 != NUMBERTOK) {
+        if (var2->type != NUMBERTOK) {
             //error check for bools
             printf("expr: Non-boolean found\n");
             return NULL;

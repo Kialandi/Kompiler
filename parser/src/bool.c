@@ -10,6 +10,7 @@ var * doBool() { //handle comparators
     if (currTok == NOTEQ || currTok == LTTOK 
         || currTok == LTEQ || currTok == GTTOK
         || currTok == GTEQ || currTok == COMPARE) {
+            printf("in dobool loop\n");
         //don't need to check types, all allowed
 
         //save the current operation

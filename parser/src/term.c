@@ -29,7 +29,7 @@ var * term() { //terminals
                 //float
             } else {
                 //something other than numbers, therefore error
-                return;
+                return NULL;
             }
         break;
 
@@ -46,6 +46,11 @@ var * term() { //terminals
         case CHARTOKEN:
         case STRTOKEN:
         case HEXTOK:
+            printf("term: TOKCONST\n");
+            var = (struct var * ) malloc(sizeof(struct var));
+            var->type = currTok;
+            var->value.intVal = atoi(tokBuf);
+            getTok();
         
         break;
 
