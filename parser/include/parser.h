@@ -8,6 +8,7 @@ typedef struct var {
         int intVal;
         float floatVal;
         char charVal;
+        char * string;
         //maybe do strings and pointers
     } value;
 

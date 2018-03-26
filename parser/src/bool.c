@@ -24,32 +24,114 @@ var * doBool() { //handle comparators
         }
 
         //TODO: fill in code for all cases
-        switch(currTok) {
+        switch (currOP) {
             //can simplify constants, but for ID you have to generate code
             case LTTOK:
-                case NUMBERTOK:
-                break;
-                case FLOATTOK:
-                break;
-                case CHARTOKEN:
-                break;
-                case STRTOKEN:
-                break;
+                switch (var1->type) {
+                    case NUMBERTOK:
+                        var1->value.intVal = var1->value.intVal < var2->value.intVal;
+                        break;
+                    case FLOATTOK:
+                        var1->value.intVal = var1->value.floatVal < var2->value.floatVal;
+                        break;
+                    case CHARTOKEN:
+                        var1->value.intVal = var1->value.charVal < var2->value.charVal;
+                        break;
+                    case STRTOKEN:
+                        //TODO: probably implement a comparator
+                        var1->value.intVal = var1->value.string < var2->value.string;
+                        break;
+                }
             break;
             
             case LTEQ:
+                switch (var1->type) {
+                    case NUMBERTOK:
+                        var1->value.intVal = var1->value.intVal <= var2->value.intVal;
+                        break;
+                    case FLOATTOK:
+                        var1->value.intVal = var1->value.floatVal <= var2->value.floatVal;
+                        break;
+                    case CHARTOKEN:
+                        var1->value.intVal = var1->value.charVal <= var2->value.charVal;
+                        break;
+                    case STRTOKEN:
+                        //TODO: probably implement a comparator
+                        var1->value.intVal = var1->value.string <= var2->value.string;
+                        break;
+                }
             break;
             
             case GTTOK:
+                switch (var1->type) {
+                    case NUMBERTOK:
+                        var1->value.intVal = var1->value.intVal > var2->value.intVal;
+                        break;
+                    case FLOATTOK:
+                        var1->value.intVal = var1->value.floatVal > var2->value.floatVal;
+                        break;
+                    case CHARTOKEN:
+                        var1->value.intVal = var1->value.charVal > var2->value.charVal;
+                        break;
+                    case STRTOKEN:
+                        //TODO: probably implement a comparator
+                        var1->value.intVal = var1->value.string > var2->value.string;
+                        break;
+                }
             break;
             
             case GTEQ:
+                switch (var1->type) {
+                    case NUMBERTOK:
+                        var1->value.intVal = var1->value.intVal >= var2->value.intVal;
+                        break;
+                    case FLOATTOK:
+                        var1->value.intVal = var1->value.floatVal >= var2->value.floatVal;
+                        break;
+                    case CHARTOKEN:
+                        var1->value.intVal = var1->value.charVal >= var2->value.charVal;
+                        break;
+                    case STRTOKEN:
+                        //TODO: probably implement a comparator
+                        var1->value.intVal = var1->value.string >= var2->value.string;
+                        break;
+                }
             break;
             
             case COMPARE:
+                switch (var1->type) {
+                    case NUMBERTOK:
+                        var1->value.intVal = var1->value.intVal == var2->value.intVal;
+                        break;
+                    case FLOATTOK:
+                        var1->value.intVal = var1->value.floatVal == var2->value.floatVal;
+                        break;
+                    case CHARTOKEN:
+                        var1->value.intVal = var1->value.charVal == var2->value.charVal;
+                        break;
+                    case STRTOKEN:
+                        //TODO: probably implement a comparator
+                        var1->value.intVal = var1->value.string == var2->value.string;
+                        break;
+                }
             break;
             
             case NOTEQ:
+                switch (var1->type) {
+                    case NUMBERTOK:
+                        var1->value.intVal = var1->value.intVal != var2->value.intVal;
+                        break;
+                    case FLOATTOK:
+                        var1->value.intVal = var1->value.floatVal != var2->value.floatVal;
+                        break;
+                    case CHARTOKEN:
+                        var1->value.intVal = var1->value.charVal != var2->value.charVal;
+                        break;
+                    case STRTOKEN:
+                        //TODO: probably implement a comparator
+                        var1->value.intVal = var1->value.string != var2->value.string;
+                        break;
+                }
             break;
 
             default:
