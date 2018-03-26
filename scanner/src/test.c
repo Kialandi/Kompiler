@@ -1,4 +1,4 @@
-#include "kompiler.h"
+#include "../../kompiler.h"
 
 int main(int argc, char ** argv) {
     if (argc != 2) {

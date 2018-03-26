@@ -1,4 +1,4 @@
-#include "kompiler.h"
+#include "../../kompiler.h"
 
 struct state stMachine[MAXSTATES][TOTALMAPS] = {
 { /* State row 0 - Default state */

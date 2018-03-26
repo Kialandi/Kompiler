@@ -1,4 +1,4 @@
-#include "kompiler.h"
+#include "../../kompiler.h"
 
 int mapTable[ASCIIMAX + 1] =
 { /* Mapping Table */

@@ -1,4 +1,4 @@
-#include "kompiler.h"
+#include "../../kompiler.h"
 
 int prevState;
 int currState;

@@ -1,4 +1,4 @@
-#include "kompiler.h"
+#include "../../kompiler.h"
 
 int getNextSt(int state, int ch) {
     if (ch == EOF) {

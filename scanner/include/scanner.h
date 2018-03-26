@@ -110,7 +110,7 @@
 
 #define STARSTAR        36
 #define ARROW           37
-#define HEXTOK          38      //add this in eventually
+#define HEXTOK          38
 
 #define TILDETOK        100
 #define LPARANTOK       101

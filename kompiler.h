@@ -7,9 +7,11 @@
 #include <string.h>
 
 /* import header files */
-#include "scanner.h"
-#include "prototypes.h"
-#include "mapTable.h"
+#include "scanner/include/scanner.h"
+#include "scanner/include/prototypes.h"
+#include "scanner/include/mapTable.h"
+
+#include "parser/include/parser.h"
 
 /* defining flags */
 #define DEBUG   1

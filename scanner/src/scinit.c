@@ -1,4 +1,4 @@
-#include "kompiler.h"
+#include "../../kompiler.h"
 
 int scinit(const char * path) {
     printf("Initializing Scanner...\n");
