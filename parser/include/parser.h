@@ -9,6 +9,7 @@ typedef struct var {
         float floatVal;
         char charVal;
         char * string;
+        char * hexVal;
         //maybe do strings and pointers
     } value;
 

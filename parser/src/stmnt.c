@@ -7,27 +7,39 @@ int parse() {
     //handle assignments
     //probably add another layer for {}
     //support for structs need {};
-    
-    //while (currTok != EOF) {
+    int i =0;
+    while (currTok != EOF) {
         var * var = expr();
+        if (var == NULL) {
+            printf("NULL var found\n");
+            return 1;
+        }
         printf("returned from expr\n");
+        printf("curTok should be %d: %d\n", SEMICOLTOK, currTok);
+        printf("=================================================\n");
         printf("Type: %d\n", var->type);
+        //getTok();
         switch(var->type) {
             case NUMBERTOK:
-                printf("Value: %d\n", var->value.intVal);
+                printf("Int value: %d\n", var->value.intVal);
                 break;
             case FLOATTOK:
-                printf("Value: %f\n", var->value.floatVal);
+                printf("Float value: %f\n", var->value.floatVal);
                 break;
             case CHARTOKEN:
-                printf("Value: %c\n", var->value.charVal);
+                printf("Char: %c\n", var->value.charVal);
+                break;
+            case STRTOKEN:
+                printf("String: %s\n", var->value.string);
                 break;
             default:
                 printf("parse: unknown token from expr\n");
                 return 1;
                 break;
         }
-   // }
+        printf("=================================================\n");
+        getTok();
+    }
     printf("Parsing complete\n");
     return 0;
 }

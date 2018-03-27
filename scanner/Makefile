@@ -8,9 +8,10 @@ CFLAGS = -g -Wall -Iinclude/
 SOURCES := $(wildcard $(SRC)/*.c)
 OBJECTS := $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SOURCES))
 
-objects: $(OBJECTS)
 
 all: scan
+
+objects: $(OBJECTS)
 
 scan: $(OBJECTS)
 	${CC} $^ -o $@

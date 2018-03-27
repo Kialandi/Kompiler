@@ -7,6 +7,7 @@ var * expr() {
 
     var1 = doBool();
     while (currTok == ANDAND || currTok == OROR) {
+        printf("in expr loop\n");
         if (var1->type != NUMBERTOK) {
             //error check for bools
             printf("expr: Non-boolean found\n");

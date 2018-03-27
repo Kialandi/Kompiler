@@ -7,10 +7,14 @@ var * rel() { //handle + and -
 
     var1 = fact();
     while (currTok == PLUSTOK || currTok == MINUSTOK) {
-        printf("in rel loop\n");
+        //printf("in rel loop\n");
         if (var1->type != NUMBERTOK && var1->type != FLOATTOK) {
+            if (var1->type == STRTOKEN) {
+                //TODO: strcat
+                printf("String append not supported yet\n");
+            }
             //error check for numbers
-            printf("rel: add and minus needs numbers");
+            printf("rel: add and minus needs numbers\n");
             return NULL;
         }
 
@@ -27,17 +31,47 @@ var * rel() { //handle + and -
 
         if (currOP == PLUSTOK) {
             //add
-            if (var1->type == NUMBERTOK)
-                var1->value.intVal += var2->value.intVal;
-            else 
-                var1->value.floatVal += var2->value.floatVal;
+            printf("adding\n");
+            if (var1->type == NUMBERTOK) { //int
+                printf("var1 is int\n");
+                if (var2->type == NUMBERTOK) {
+                    printf("var 2 is int\n");
+                    var1->value.intVal += var2->value.intVal;
+                }
+                else {
+                    printf("var2 is float, upcasting\n");
+                    var1->value.floatVal = (float) var1->value.intVal + var2->value.floatVal;
+                    var1->type = FLOATTOK;
+                }
+            }
+            else {
+                printf("var1 is float\n");
+                if (var2->type == NUMBERTOK)
+                    var1->value.floatVal += (float) var2->value.intVal;
+                else
+                    var1->value.floatVal += var2->value.floatVal;
+            }
+            //printf("var1: %d, var2: %d\n", var1->value.intVal, var2->value.intVal);
+            //printf("var1: %f, var2: %f\n", var1->value.floatVal, var2->value.floatVal);
         }
         else if (currOP == MINUSTOK){
             //subtract
-            if (var1->type == NUMBERTOK)
-                var1->value.intVal -= var2->value.intVal;
-            else 
-                var1->value.floatVal -= var2->value.floatVal;
+            printf("subtracting\n");
+            if (var1->type == NUMBERTOK) { //int
+                if (var2->type == NUMBERTOK)
+                    var1->value.intVal -= var2->value.intVal;
+                else {
+                    printf("var2 is float, upcasting\n");
+                    var1->value.floatVal = (float) var1->value.intVal - var2->value.floatVal;
+                    var1->type = FLOATTOK;
+                }
+            }
+            else {
+                if (var2->type == NUMBERTOK)
+                    var1->value.floatVal -= var2->value.intVal;
+                else
+                    var1->value.floatVal -= var2->value.floatVal;
+            }
         }
         else {
             //fatal error

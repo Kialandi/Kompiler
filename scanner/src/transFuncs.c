@@ -108,7 +108,7 @@ void accuHex() {
 void accumulate() {
     int nextState;
     int enteredSt = currState;
-
+    
     if (currState == NUMBERST && currCh == '0') {
         grabNextCh();
         if (currCh == 'x') {
@@ -126,8 +126,19 @@ void accumulate() {
 
         storeCh('0');
     }
+
+    nextState = getNextSt(currState, currCh);
+    if (nextState == ACCEPTST) {
+        //done accumulating
+        tokBuf[tokBufIndex] = '\0';
+        retToken = grabRetToken(currState, currCh);
+        return;
+    }
     
     storeCh(currCh);
+    
+    if (currState == NUMBERST && currCh == '.')
+        currState = FLOATST;
 
     while ( (currCh = getc(fp)) != EOF && currState != ACCEPTST && currState != ERRST && tokBufIndex < MAXTOKBUFLEN) {
         

@@ -10,7 +10,7 @@ var * fact() { //handle * and /
         printf("in fact loop\n");
         if (var1->type != NUMBERTOK && var1->type != FLOATTOK) {
             //error check for numbers
-            printf("fact: mult and div needs numbers");
+            printf("fact: mult and div needs numbers\n");
             return NULL;
         }
         //save the current operation
@@ -28,19 +28,55 @@ var * fact() { //handle * and /
         if (currOP == STARTOK) {
             //multiply
             //TODO: Handle float * int and int * float
-            if (var1->type == NUMBERTOK)
-                var1->value.intVal *= var2->value.intVal;
-            else 
-                var1->value.floatVal *= var2->value.floatVal;
+            if (var1->type == NUMBERTOK) { 
+                if (var2->type == NUMBERTOK) {//int * int
+                    var1->value.intVal *= var2->value.intVal;
+                }
+                else { //int * float
+                    var1->value.floatVal = var1->value.intVal * var2->value.floatVal;
+                    var1->type = FLOATTOK;
+                }
+            }
+            else {
+                if (var2->type == NUMBERTOK) {//float * int
+                    var1->value.floatVal *= var2->value.intVal;
+                }
+                else { //float * float
+                    var1->value.floatVal *= var2->value.floatVal;
+                }
+            }
         }
         else if (currOP == DIVTOK) {
             //divide
             //TODO: Handle float / int and int / float
-            //TODO: special case for upcasting or downcasting
-            if (var1->type == NUMBERTOK)
-                var1->value.intVal /= var2->value.intVal;
-            else 
-                var1->value.floatVal /= var2->value.floatVal;
+            //TODO: special case for upcasting
+            if (var1->type == NUMBERTOK) {
+                if (var2->type == NUMBERTOK) {//int / int
+                    float fl = (float) var1->value.intVal / var2->value.intVal;
+                    int in = var1->value.intVal / var2->value.intVal;
+                    if (fl == (float) in) {
+                        //means still integer
+                        var1->value.intVal = in;
+                    }
+                    else {
+                        //casted to float
+                        var1->value.floatVal = fl;
+                        var1->type = FLOATTOK;
+                    }
+                }
+                else { //int / float
+                    var1->value.floatVal = var1->value.intVal / var2->value.floatVal;
+                    var1->type = FLOATTOK;
+                }
+            }
+            else {
+                if (var2->type == NUMBERTOK) {//float / int
+                    var1->value.floatVal /= var2->value.intVal;
+                }
+                else { //float / float
+                    var1->value.floatVal /= var2->value.floatVal;
+                }
+            }
         }
         else {
             //fatal error
